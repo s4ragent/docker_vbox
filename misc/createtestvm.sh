@@ -10,10 +10,10 @@ DISKSIZE=6400; #in MB
 RAM=512; #in MB
 CPU=1;
 CPUCAP=100;
-PAE="off";
+PAE="on";
 ADAPTER="eth0";
-HWVIRT="off";
-NESTPAGING="off";
+HWVIRT="on";
+NESTPAGING="on";
 VRAM=8;
 USB="off";
 

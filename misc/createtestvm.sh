@@ -5,7 +5,7 @@ cp CentOS-6.8-x86_64-minimal.iso /tmp
 VM="CentOS_6"; #name of the virtual machine
 ISO="/tmp/CentOS-6.8-x86_64-minimal.iso";
 VBROOT="/vb";
-OSTYPE="RedHat";
+OSTYPE="RedHat_64";
 DISKSIZE=6400; #in MB
 RAM=512; #in MB
 CPU=1;

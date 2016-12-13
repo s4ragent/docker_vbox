@@ -1,0 +1,43 @@
+#/bin/bash
+wget http://linux.mirrors.es.net/centos/6.8/isos/x86_64/CentOS-6.8-x86_64-minimal.iso
+cp CentOS-6.8-x86_64-minimal.iso /tmp
+
+VM="CentOS_6"; #name of the virtual machine
+ISO="/tmp/CentOS-6.8-x86_64-minimal.iso";
+VBROOT="/vb";
+OSTYPE="RedHat";
+DISKSIZE=6400; #in MB
+RAM=512; #in MB
+CPU=1;
+CPUCAP=100;
+PAE="off";
+ADAPTER="eth0";
+HWVIRT="off";
+NESTPAGING="off";
+VRAM=8;
+USB="off";
+
+VBoxManage createhd --filename "$VBROOT"/"$VM"/"$VM".vdi --size "$DISKSIZE";
+VBoxManage createvm --register --name "$VM" --basefolder "$VBOXROOT" --ostype "$OSTYPE";
+VBoxManage storagectl "$VM" --name "SATA Controller" --add sata  --controller IntelAHCI;
+VBoxManage storageattach "$VM" --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium "$VBROOT"/"$VM"/"$VM".vdi;
+VBoxManage storagectl "$VM" --name "IDE Controller" --add ide;
+VBoxManage storageattach "$VM" --storagectl "IDE Controller" --port 0 --device 0 --type dvddrive --medium "$ISO";
+VBoxManage modifyvm "$VM" --memory "$RAM";
+VBoxManage modifyvm "$VM" --boot1 dvd --boot2 disk --boot3 none --boot4 none;
+VBoxManage modifyvm "$VM" --chipset piix3;
+VBoxManage modifyvm "$VM" --ioapic off;
+VBoxManage modifyvm "$VM" --mouse ps2;
+VBoxManage modifyvm "$VM" --cpus "$CPU" --cpuexecutioncap "$CPUCAP" --pae "$PAE";
+VBoxManage modifyvm "$VM" --hwvirtex off --nestedpaging off;
+VBoxManage modifyvm "$VM" --nic1 bridged --bridgeadapter1 "$ADAPTER";
+VBoxManage modifyvm "$VM" --vram "$VRAM";
+VBoxManage modifyvm "$VM" --monitorcount 1;
+VBoxManage modifyvm "$VM" --accelerate2dvideo off --accelerate3d off;
+VBoxManage modifyvm "$VM" --audio none;
+VBoxManage modifyvm "$VM" --snapshotfolder "$VBROOT"/"$VM"/Snapshots;
+VBoxManage modifyvm "$VM" --clipboard bidirectional;
+VBoxManage modifyvm "$VM" --usb "$USB";
+VBoxManage modifyvm "$VM" --vrde on;
+
+VBoxHeadless --startvm "$VM" -e "TCP/Ports=8888" --vrde on

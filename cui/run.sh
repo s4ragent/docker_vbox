@@ -20,4 +20,4 @@ make -C /usr/src/linux prepare modules_prepare
 
 /sbin/vboxconfig
 
-exec /bin/bash
+tail -f /dev/null

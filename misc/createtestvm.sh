@@ -1,9 +1,12 @@
 #/bin/bash
-wget http://linux.mirrors.es.net/centos/6.8/isos/x86_64/CentOS-6.8-x86_64-minimal.iso
-cp CentOS-6.8-x86_64-minimal.iso /tmp
+CentOSVER=$1
+if [ ! -e /tmp/CentOS-$CentOSVER-x86_64-minimal.iso ]; then
+  wget http://linux.mirrors.es.net/centos/$CentOSVER/isos/x86_64/CentOS-$CentOSVER-x86_64-minimal.iso
+  mv CentOS-$CentOSVER-x86_64-minimal.iso /tmp
+fi
 
-VM="CentOS_6"; #name of the virtual machine
-ISO="/tmp/CentOS-6.8-x86_64-minimal.iso";
+VM="CentOS_$CentOSVER"; #name of the virtual machine
+ISO="/tmp/CentOS-$CentOSVER-x86_64-minimal.iso";
 VBROOT="/vb";
 OSTYPE="RedHat_64";
 DISKSIZE=6400; #in MB
@@ -13,7 +16,7 @@ CPUCAP=100;
 PAE="on";
 ADAPTER="eth0";
 HWVIRT="on";
-NESTPAGING="on";
+NESTPAGING="off";
 VRAM=8;
 USB="off";
 
@@ -29,7 +32,7 @@ VBoxManage modifyvm "$VM" --chipset piix3;
 VBoxManage modifyvm "$VM" --ioapic off;
 VBoxManage modifyvm "$VM" --mouse ps2;
 VBoxManage modifyvm "$VM" --cpus "$CPU" --cpuexecutioncap "$CPUCAP" --pae "$PAE";
-VBoxManage modifyvm "$VM" --hwvirtex off --nestedpaging off;
+VBoxManage modifyvm "$VM" --hwvirtex "$HWVIRT" --nestedpaging "$NESTPAGING";
 VBoxManage modifyvm "$VM" --nic1 bridged --bridgeadapter1 "$ADAPTER";
 VBoxManage modifyvm "$VM" --vram "$VRAM";
 VBoxManage modifyvm "$VM" --monitorcount 1;

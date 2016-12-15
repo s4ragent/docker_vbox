@@ -22,7 +22,7 @@ if [ ! -e /root/vboxconfigdone ]; then
   /sbin/vboxconfig
   sed -i.bak '/fi/a #xrdp multiple users configuration \n mate-session \n' /etc/xrdp/startwm.sh
 
-  useradd -m $vboxuser
+  useradd -m -G vboxusers $vboxuser
   bash -c 'echo "$vboxuser:$vboxpass" | chpasswd'
 
   touch /root/vboxconfigdone

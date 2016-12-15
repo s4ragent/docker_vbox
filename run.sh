@@ -1,6 +1,6 @@
 #!/bin/bash
 # Determine versions
-if [ -e /root/vboxconfigdone ]; then
+if [ ! -e /root/vboxconfigdone ]; then
   arch="$(uname -m)"
   release="$(uname -r)"
   upstream="${release%%-*}"

@@ -7,7 +7,7 @@ fi
 
 VM="CentOS_$CentOSVER"; #name of the virtual machine
 ISO="/tmp/CentOS-$CentOSVER-x86_64-minimal.iso";
-VBROOT="/vb";
+VBROOT="/data";
 OSTYPE="RedHat_64";
 DISKSIZE=6400; #in MB
 RAM=512; #in MB

@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # Install VirtualBox
 RUN echo "deb http://download.virtualbox.org/virtualbox/debian xenial contrib non-free" > /etc/apt/sources.list.d/virtualbox.list
 RUN apt-get update
-RUN apt-get install -y build-essential libssl-dev bc git vim
+RUN apt-get install -y build-essential libssl-dev bc git vim wget
 RUN apt-get install -y --no-install-recommends xrdp lxde-core x11vnc
 RUN wget --no-check-certificate https://www.virtualbox.org/download/oracle_vbox.asc
 RUN apt-key add oracle_vbox.asc

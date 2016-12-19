@@ -24,6 +24,8 @@ if [ ! -e /root/vboxconfigdone ]; then
 
   useradd -m -G vboxusers $vboxuser
   bash -c 'echo "$vboxuser:$vboxpass" | chpasswd'
+  
+  chown ${vboxuser}.${vboxuser} /data
 
   touch /root/vboxconfigdone
 fi

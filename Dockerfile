@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:14.04
 MAINTAINER s4ragent
 ENV DEBIAN_FRONTEND noninteractive
 # Install VirtualBox
@@ -15,5 +15,6 @@ VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}.v
 rm Oracle_VM_VirtualBox_Extension_Pack-${VBOX_VERSION}.vbox-extpack
 
 COPY ./run.sh /
+COPY ./misc/createtestvm.sh /
 RUN chmod +x ./run.sh
 ENTRYPOINT ["/run.sh"]

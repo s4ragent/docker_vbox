@@ -1,6 +1,6 @@
 #!/bin/bash
 # Determine versions
-if [ ! -e /root/vboxconfigdone ]; then
+if [ ! -e /root/kernelconfigdone ]; then
   arch="$(uname -m)"
   release="$(uname -r)"
   upstream="${release%%-*}"
@@ -19,15 +19,17 @@ if [ ! -e /root/vboxconfigdone ]; then
   wget -O /usr/src/linux/Module.symvers "http://mirror.scaleway.com/kernel/${arch}/${release}/Module.symvers"
   make -C /usr/src/linux prepare modules_prepare
 
-  /sbin/vboxconfig
+  
   sed -i.bak '/fi/a #xrdp multiple users configuration \n xfce4-session \n' /etc/xrdp/startwm.sh
 
   useradd -m -G vboxusers $vboxuser
   bash -c 'echo "$vboxuser:$vboxpass" | chpasswd'
-
+  
   chown ${vboxuser}.${vboxuser} /data
-  touch /root/vboxconfigdone
+  ln -s /data "/home/$vboxuser/VirtualBox VMs"
+  touch /root/kernelconfigdone
 fi
 
+/sbin/vboxconfig
 /etc/init.d/xrdp start
 tail -f /dev/null

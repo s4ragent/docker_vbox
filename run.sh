@@ -18,7 +18,7 @@ if [ ! -e /root/vboxconfigdone ]; then
   printf 'CONFIG_LOCALVERSION="%s"\nCONFIG_CROSS_COMPILE=""\n' "${local:+-$local}" >> /usr/src/linux/.config
   wget -O /usr/src/linux/Module.symvers "http://mirror.scaleway.com/kernel/${arch}/${release}/Module.symvers"
   make -C /usr/src/linux prepare modules_prepare
-  /sbin/vboxconfig
+  
   
   sed -i.bak '/fi/a #xrdp multiple users configuration \n xfce4-session \n' /etc/xrdp/startwm.sh
 
@@ -31,6 +31,8 @@ if [ ! -e /root/vboxconfigdone ]; then
   touch /root/vboxconfigdone
 fi
 
+/sbin/vboxconfig
 
+rm -rf /var/run/xrdp/*.pid
 /etc/init.d/xrdp start
 tail -f /dev/null

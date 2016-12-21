@@ -8,6 +8,7 @@ RUN apt-get install -y build-essential libssl-dev wget bc git vim xrdp firefox x
 RUN wget https://www.virtualbox.org/download/oracle_vbox.asc
 RUN wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 RUN wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+RUN apt-get update
 RUN apt-get install -y virtualbox-5.1
 
 RUN VBOX_VERSION=`dpkg -s virtualbox-5.1 | grep '^Version: ' | sed -e 's/Version: \([0-9\.]*\)\-.*/\1/'` ; \

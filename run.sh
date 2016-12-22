@@ -30,13 +30,13 @@ if [ ! -e /root/vboxconfigdone ]; then
   
   
   chown ${vboxuser}.${vboxuser} $VBOX_USER_HOME
-  VBoxManage setproperty machinefolder $VBOX_USER_HOME
   
   
   touch /root/vboxconfigdone
 fi
 
 /sbin/vboxconfig
+sudo -u ${vboxuser} VBoxManage setproperty machinefolder $VBOX_USER_HOME
 
 rm -rf /var/run/xrdp/*.pid
 /etc/init.d/xrdp start

@@ -26,8 +26,10 @@ if [ ! -e /root/vboxconfigdone ]; then
   bash -c 'echo "$vboxuser:$vboxpass" | chpasswd'
   
   
-  chown ${vboxuser}.${vboxuser} /data
-  ln -s /data "/home/$vboxuser/VirtualBox VMs"
+  chown ${vboxuser}.${vboxuser} $VBOX_USER_HOME
+  VBoxManage setproperty machinefolder $VBOX_USER_HOME
+  
+  
   touch /root/vboxconfigdone
 fi
 

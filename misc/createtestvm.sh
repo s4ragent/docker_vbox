@@ -21,7 +21,7 @@ USB="off";
 vboxroot=$3
 
 VBoxManage createhd --filename "$vboxroot/${VM}/${VM}.vdi" --size "$DISKSIZE";
-VBoxManage createvm --register --name "$VM" --ostype "$OSTYPE" --basefolder $vboxroot/${VM};
+VBoxManage createvm --register --name "$VM" --ostype "$OSTYPE" --basefolder $vboxroot;
 VBoxManage storagectl "$VM" --name "SATA Controller" --add sata  --controller IntelAHCI;
 VBoxManage storageattach "$VM" --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium "$vboxroot/${VM}/${VM}.vdi";
 VBoxManage storagectl "$VM" --name "IDE Controller" --add ide;

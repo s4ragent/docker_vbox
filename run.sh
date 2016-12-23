@@ -21,6 +21,9 @@ if [ ! -e /root/vboxconfigdone ]; then
     printf 'CONFIG_LOCALVERSION="%s"\nCONFIG_CROSS_COMPILE=""\n' "${local:+-$local}" >> /usr/src/linux/.config
     wget -O /usr/src/linux/Module.symvers "http://mirror.scaleway.com/kernel/${arch}/${release}/Module.symvers"
     make -C /usr/src/linux prepare modules_prepare
+  else
+    apt-get update
+    apt-get install -y linux-headers-$(uname -r)
   fi
   
   sed -i.bak '/fi/a #xrdp multiple users configuration \n xfce4-session \n' /etc/xrdp/startwm.sh

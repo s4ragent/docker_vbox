@@ -5,7 +5,7 @@ if [ ! -e /tmp/CentOS-$CentOSVER-x86_64-minimal.iso ]; then
   mv CentOS-$CentOSVER-x86_64-minimal.iso /tmp
 fi
 
-VM="CentOS_$CentOSVER_$2"; #name of the virtual machine
+VM="CentOS_${1}_${2}"; #name of the virtual machine
 ISO="/tmp/CentOS-$CentOSVER-x86_64-minimal.iso";
 OSTYPE="RedHat_64";
 DISKSIZE=6400; #in MB
@@ -18,11 +18,12 @@ HWVIRT="on";
 NESTPAGING="on";
 VRAM=8;
 USB="off";
+vboxroot=$3
 
-VBoxManage createhd --filename "~/VirtualBox VMs"/"$VM"/"$VM".vdi --size "$DISKSIZE";
+VBoxManage createhd --filename "$vboxroot/${VM}/${VM}.vdi" --size "$DISKSIZE";
 VBoxManage createvm --register --name "$VM" --ostype "$OSTYPE";
 VBoxManage storagectl "$VM" --name "SATA Controller" --add sata  --controller IntelAHCI;
-VBoxManage storageattach "$VM" --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium "~/VirtualBox VMs"/"$VM"/"$VM".vdi;
+VBoxManage storageattach "$VM" --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium "$vboxroot/${VM}/${VM}.vdi";
 VBoxManage storagectl "$VM" --name "IDE Controller" --add ide;
 VBoxManage storageattach "$VM" --storagectl "IDE Controller" --port 0 --device 0 --type dvddrive --medium "$ISO";
 VBoxManage modifyvm "$VM" --memory "$RAM";
@@ -37,7 +38,7 @@ VBoxManage modifyvm "$VM" --vram "$VRAM";
 VBoxManage modifyvm "$VM" --monitorcount 1;
 VBoxManage modifyvm "$VM" --accelerate2dvideo off --accelerate3d off;
 VBoxManage modifyvm "$VM" --audio none;
-VBoxManage modifyvm "$VM" --snapshotfolder "~/VirtualBox VMs"/"$VM"/Snapshots;
+VBoxManage modifyvm "$VM" --snapshotfolder $vboxroot/${VM}//Snapshots;
 VBoxManage modifyvm "$VM" --clipboard bidirectional;
 VBoxManage modifyvm "$VM" --usb "$USB";
 VBoxManage modifyvm "$VM" --vrde on;

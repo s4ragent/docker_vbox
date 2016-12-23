@@ -21,7 +21,7 @@ USB="off";
 vboxroot=$3
 
 VBoxManage createhd --filename "$vboxroot/${VM}/${VM}.vdi" --size "$DISKSIZE";
-VBoxManage createvm --register --name "$VM" --ostype "$OSTYPE";
+VBoxManage createvm --register --name "$VM" --ostype "$OSTYPE" --basefolder $vboxroot/${VM};
 VBoxManage storagectl "$VM" --name "SATA Controller" --add sata  --controller IntelAHCI;
 VBoxManage storageattach "$VM" --storagectl "SATA Controller" --port 0 --device 0 --type hdd --medium "$vboxroot/${VM}/${VM}.vdi";
 VBoxManage storagectl "$VM" --name "IDE Controller" --add ide;
@@ -38,7 +38,7 @@ VBoxManage modifyvm "$VM" --vram "$VRAM";
 VBoxManage modifyvm "$VM" --monitorcount 1;
 VBoxManage modifyvm "$VM" --accelerate2dvideo off --accelerate3d off;
 VBoxManage modifyvm "$VM" --audio none;
-VBoxManage modifyvm "$VM" --snapshotfolder $vboxroot/${VM}//Snapshots;
+VBoxManage modifyvm "$VM" --snapshotfolder $vboxroot/${VM}/Snapshots;
 VBoxManage modifyvm "$VM" --clipboard bidirectional;
 VBoxManage modifyvm "$VM" --usb "$USB";
 VBoxManage modifyvm "$VM" --vrde on;

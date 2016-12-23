@@ -28,9 +28,9 @@ if [ ! -e /root/vboxconfigdone ]; then
   
   sed -i.bak '/fi/a #xrdp multiple users configuration \n xfce4-session \n' /etc/xrdp/startwm.sh
 
-  useradd -m -G vboxusers $vboxuser
+  useradd -s /bin/bash -m -G vboxusers $vboxuser
   bash -c 'echo "$vboxuser:$vboxpass" | chpasswd'
-  bash -c 'echo VBOX_USER_HOME=$VBOX_USER_HOME >> /home/${vboxuser}/.bashrc'
+  bash -c 'echo export VBOX_USER_HOME=$VBOX_USER_HOME >> /home/${vboxuser}/.bashrc'
   
   chown ${vboxuser}.${vboxuser} $VBOX_USER_HOME
   

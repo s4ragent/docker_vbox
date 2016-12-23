@@ -27,7 +27,7 @@ if [ ! -e /root/vboxconfigdone ]; then
 
   useradd -m -G vboxusers $vboxuser
   bash -c 'echo "$vboxuser:$vboxpass" | chpasswd'
-  
+  bash -c 'echo VBOX_USER_HOME=$VBOX_USER_HOME >> /home/${vboxuser}/.bashrc'
   
   chown ${vboxuser}.${vboxuser} $VBOX_USER_HOME
   
@@ -36,7 +36,7 @@ if [ ! -e /root/vboxconfigdone ]; then
 fi
 
 /sbin/vboxconfig
-sudo -u ${vboxuser} VBoxManage setproperty machinefolder $VBOX_USER_HOME
+sudo -u ${vboxuser} -i VBoxManage setproperty machinefolder $VBOX_USER_HOME
 
 rm -rf /var/run/xrdp/*.pid
 /etc/init.d/xrdp start

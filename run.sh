@@ -1,5 +1,7 @@
 #!/bin/bash
 # Determine versions
+
+vagrant_version=1.9.1
 if [ ! -e /root/vboxconfigdone ]; then
   is_scaleway=`cat /proc/version | grep scaleway | wc -l`
   
@@ -31,10 +33,12 @@ if [ ! -e /root/vboxconfigdone ]; then
   useradd -s /bin/bash -m -G vboxusers $vboxuser
   bash -c 'echo "$vboxuser:$vboxpass" | chpasswd'
   bash -c 'echo export VBOX_USER_HOME=$VBOX_USER_HOME >> /home/${vboxuser}/.bashrc'
+  bash -c 'echo export VAGRANT_HOME=$VBOX_USER_HOME >> /home/${vboxuser}/.bashrc'
+  
   
   chown ${vboxuser}.${vboxuser} $VBOX_USER_HOME
-  
-  
+  wget https://releases.hashicorp.com/vagrant/${vagrant_version}/vagrant_${vagrant_version}_x86_64.deb
+  dpkg --install vagrant_${vagrant_version}_x86_64.deb
   touch /root/vboxconfigdone
 fi
 

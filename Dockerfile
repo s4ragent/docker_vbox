@@ -5,7 +5,6 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN echo "deb http://download.virtualbox.org/virtualbox/debian trusty contrib non-free" > /etc/apt/sources.list.d/virtualbox.list
 RUN apt-get update
 RUN apt-get install -y build-essential libssl-dev wget bc git vim xrdp firefox xfce4 xfce4-goodies
-RUN wget https://www.virtualbox.org/download/oracle_vbox.asc
 RUN wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
 RUN wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
 RUN apt-get update

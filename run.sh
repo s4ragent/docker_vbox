@@ -30,10 +30,10 @@ if [ ! -e /root/vboxconfigdone ]; then
   
   sed -i.bak '/fi/a #xrdp multiple users configuration \n xfce4-session \n' /etc/xrdp/startwm.sh
 
-  useradd -s /bin/bash -m -G vboxusers $vboxuser
+  useradd -d $VBOX_USER_HOME -s /bin/bash -m -G vboxusers $vboxuser
   bash -c 'echo "$vboxuser:$vboxpass" | chpasswd'
-  bash -c 'echo export VBOX_USER_HOME=$VBOX_USER_HOME >> /home/${vboxuser}/.bashrc'
-  bash -c 'echo export VAGRANT_HOME=$VBOX_USER_HOME >> /home/${vboxuser}/.bashrc'
+#  bash -c 'echo export VBOX_USER_HOME=$VBOX_USER_HOME >> /home/${vboxuser}/.bashrc'
+#  bash -c 'echo export VAGRANT_HOME=$VBOX_USER_HOME >> /home/${vboxuser}/.bashrc'
   
   
   chown ${vboxuser}.${vboxuser} $VBOX_USER_HOME
@@ -43,7 +43,7 @@ if [ ! -e /root/vboxconfigdone ]; then
 fi
 
 /sbin/vboxconfig
-sudo -u ${vboxuser} -i VBoxManage setproperty machinefolder $VBOX_USER_HOME
+#sudo -u ${vboxuser} -i VBoxManage setproperty machinefolder $VBOX_USER_HOME
 
 rm -rf /var/run/xrdp/*.pid
 /etc/init.d/xrdp start
